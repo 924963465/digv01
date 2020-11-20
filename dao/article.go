@@ -7,8 +7,10 @@ import (
 )
 
 func SelectOneArticle(articleId int64) (*model.Article, error) {
-	var articleOne *model.Article
-	err := global.DBLink.Where("articleId=?",articleId).First(&articleOne).Error
+	fields := []string{"articleId", "subject", "url"}
+	//var articleOne *model.Article
+	articleOne:=&model.Article{}
+	err := global.DBLink.Select(fields).Where("articleId=?",articleId).First(&articleOne).Error
 	if (err != nil) {
 		return nil,err
 	} else {
